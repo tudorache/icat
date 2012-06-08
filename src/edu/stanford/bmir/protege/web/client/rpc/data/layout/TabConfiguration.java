@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TabConfiguration implements Serializable{
+import edu.stanford.bmir.protege.web.client.ui.portlet.propertyForm.FormConstants;
+
+public class TabConfiguration extends GenericConfiguration implements Serializable{
 	private static final long serialVersionUID = 9187571983105881720L;
 
 	private String name;
 	private String label;
+	private String headerCssClass = null;
 	private List<TabColumnConfiguration> columns = new ArrayList<TabColumnConfiguration>();
 	private PortletConfiguration controllingPortlet;	
 
@@ -28,6 +31,12 @@ public class TabConfiguration implements Serializable{
 	public void setLabel(String label) {
 		this.label = label;
 	}
+    public String getHeaderCssClass() {
+        return headerCssClass;
+    }
+    public void setHeaderCssClass(String className) {
+        this.headerCssClass = className;
+    }
 	public List<TabColumnConfiguration> getColumns() {
 		return columns;
 	}
@@ -41,6 +50,11 @@ public class TabConfiguration implements Serializable{
 		this.controllingPortlet = controllingPortlet;
 	}
 
+	//convenience accessor methods to read values of commonly expected properties
+	public boolean getClosable() {
+		return getBooleanProperty(FormConstants.CLOSABLE, true);
+	}
+	
 	public void removeAllPortlet(String javaClassName) {
 		for (TabColumnConfiguration column : columns) {
 			List<PortletConfiguration> portlets = column.getPortlets();
